@@ -1,0 +1,118 @@
+@font-face {
+    font-family: retroFont;
+    src: url(resources/retroFont.ttf);
+}
+@font-face {
+    font-family: linebeam;
+    src: url(/resources/Linebeam.ttf);
+}
+
+
+*{
+    box-sizing: border-box;
+}
+html, body{
+    background-color: black;
+    display: flex;
+
+}
+
+.container{
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.chassi{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #e2d9cd;
+    border: outset 4px;
+    box-shadow: 4px 4px rgba(0, 0, 0, 0.082);
+    border-radius: 10px;
+}
+
+.brand{
+    font-size: 70px;
+    text-align: left;
+    font-family: linebeam;
+    padding: 10px;
+}
+.display{
+    align-self: center;
+    text-align: left;
+    width: 93%;
+    background-color: black;
+    color: #EF1E06;
+    text-shadow: 0px -2px 10px;
+    letter-spacing: 4px;
+    padding: 15px;
+    padding-top: 30px;
+    margin: 5px;
+    font-size: 60px;
+    border: inset #ffffff 4px;
+    font-family: retroFont;
+}
+
+.buttons{
+    align-self: center;
+    border: inset #716c6c 2px;
+    display: grid;
+    grid-template-columns: repeat(4,auto);
+    grid-template-rows: repeat(4,auto);
+    margin:20px;
+    padding: 10px;
+    background-color: #e2d9cf;
+    flex: 1;
+    border-radius: 20px;
+}
+
+.minus{
+    grid-row: 1;
+    grid-column: 4;
+}
+.plus{
+    grid-row: 2;
+    grid-column: 4;
+}
+
+.zero{
+    grid-row: 4;
+    grid-column: 2;
+}
+
+.clear{
+    grid-row: 4;
+    grid-column: 1;
+}
+.equals{
+    grid-row: 4;
+    grid-column: 3;
+}
+
+.btn{
+    background-size: cover;
+    background-position: center;
+    height: 7em;
+    width: 7em;
+    margin: 4px;
+    box-shadow: 0px 3px 5px px rgba(0, 0, 0, 0.199);
+    color: #efe7dc;
+    font-family: retroFont;
+    font-size: 15px;
+    border-radius: 20px;
+}
+
+.operator{
+    background-image: url(resources/blue_button.png);
+}
+
+.number{
+    background-image: url(resources/brown_button.png);
+}
+.button:active{
+    background-color: #716c6c;
+}
