@@ -1,9 +1,9 @@
-const bass = new Audio("resources/key.mp3");
+const keysound = new Audio("resources/key.mp3");
 const button = document.querySelectorAll("button");
 
 function sound(){
-    bass.currentTime = 0;
-    bass.play();
+    keysound.currentTime = 0.04;
+    keysound.play();
 }
 
 button.forEach(button => button.addEventListener("click", sound))
