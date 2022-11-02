@@ -8,7 +8,6 @@
     src: url(resources/Linebeam.ttf);
 }
 
-
 * {
     box-sizing: border-box;
 }
@@ -50,21 +49,23 @@ body {
     text-shadow: 2px 4px rgba(255, 255, 255, 0.383);
 }
 
-.display {
+ .screen {
+    display: flex;
     width: 500px;
-    height: 100px;
+    height: auto;
     flex: 1;
-    overflow: hidden;
     white-space: nowrap;
     background-color: black;
+    border: inset #ffffff 4px;
+} 
+
+.display{
     color: #EF1E06;
     text-shadow: 0px -2px 10px;
     letter-spacing: 4px;
-    padding: 20px;
-    padding-top: 40px;
-    margin-right: 10px;
-    font-size: 40px;
-    border: inset #ffffff 4px;
+    padding: 10px;
+    padding-bottom: 10px;
+    font-size: 2em;
     font-family: retroFont;
 }
 
@@ -154,3 +155,154 @@ button:active {
     box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.478);
 }
 
+@media(max-width: 600px){
+    * {
+        box-sizing: border-box;
+    }
+    
+    body {
+        height: 100vh;
+        width: 100vw;
+        margin: 0px;
+        padding: 0px;
+        background: linear-gradient(190deg, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1));
+    }
+    .container{
+        height: 100vh;
+        width: 100vw;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .chassi {
+        width: 100%;
+        height: auto;
+        padding: 15px;
+        background-color: #e2d9cd;
+        border: outset 4px;
+        box-shadow: 10px 30px 40px rgba(0, 0, 0, 0.212);
+        border-radius: 10px;
+        margin: 0px;
+        padding: 2%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .brand {
+        display: flex;
+        text-align: left;
+        white-space: nowrap;
+        font-size: 38px;
+        text-align: left;
+        font-family: linebeam;
+        margin: 10px;
+        color: #3d3d3d;
+        text-shadow: 2px 4px rgba(255, 255, 255, 0.383);
+    }
+    
+    .screen {
+        display: flex;
+        flex-shrink: 1;
+        width: 90vw;
+        flex: 1;
+        white-space: nowrap;
+        background-color: black;
+        border: inset #ffffff 4px;
+    } 
+    
+    .display{
+        font-size: 1.18em;
+        display: flex;
+        color: #EF1E06;
+        text-shadow: 0px -2px 10px;
+        letter-spacing: 4px;
+        padding: 10px;
+        padding-bottom: 10px;
+        font-family: retroFont;
+    }
+    
+    .buttons {
+        width: 100%;
+        height: 100%;
+        align-self: center;
+        box-shadow: inset 0px 5px 2px rgba(0, 0, 0, 0.478);
+        display: grid;
+        grid-template-columns: repeat(4, auto);
+        background-color: #d4cabf;
+        border-radius: 12px;
+    }
+    
+    .zero {
+        grid-row: 4;
+        grid-column: 2;
+    }
+    
+    .minus {
+        grid-row: 3;
+        grid-column: 4;
+    }
+    
+    .plus {
+        grid-row: 4;
+        grid-column: 4;
+    }
+    
+    .equals {
+        grid-row: 4;
+        grid-column: 3;
+    }
+    
+    .times {
+        grid-row: 2;
+        grid-column: 4;
+    }
+    
+    .divided {
+        grid-row: 1;
+        grid-column: 4;
+    }
+    
+    .comma {
+        grid-row: 4;
+        grid-column: 1;
+    }
+    
+    .btn {
+        background-size: cover;
+        background-position: center;
+        aspect-ratio: 1 / 1;
+        margin: 3px;
+        color: #ffffff;
+        font-family: sans-serif;
+        font-size: 100%;
+        border-radius: 12px;
+        text-align: center;
+    }
+    
+    .clear {
+        grid-column: 1 / span 4;
+        aspect-ratio: 6 / 1;
+        background-color: black;
+        letter-spacing: 5px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: #f1f1f1;
+        box-shadow: inset 0px -3px 1px rgba(255, 255, 255, 0.478);
+    }
+    
+    
+    .operator {
+        background-image: url(resources/blue_button.png);
+    }
+    
+    .number {
+        background-image: url(resources/brown_button.png);
+    }
+    
+    button:focus {
+        filter: brightness(95%);
+        box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.478);
+    }
+}

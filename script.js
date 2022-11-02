@@ -2,7 +2,7 @@ const keysound = new Audio("resources/key.mp3");
 const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
 const allButtons = document.querySelectorAll("button");
-const display = document.querySelector(".display");
+const display = document.querySelector("h1");
 const clear = document.querySelector(".clear");
 
 function sound() {
@@ -18,8 +18,10 @@ function tapOrClick(event) {
 allButtons.forEach(allButtons => allButtons.addEventListener("touchstart", sound));
 allButtons.forEach(allButtons => allButtons.addEventListener("touchend", tapOrClick, false));
 allButtons.forEach(allButtons => allButtons.addEventListener("mousedown", sound));
-numberButtons.forEach(numberButtons => numberButtons.addEventListener("click", userInput));
+numberButtons.forEach(numberButtons => numberButtons.addEventListener("mousedown", userInput));
+numberButtons.forEach(numberButtons => numberButtons.addEventListener("touchstart", userInput));
 clear.addEventListener("click", userInput);
+clear.addEventListener("touchstart", userInput);
 
 let userNum = "";
 let arr = Array.from(userNum);
@@ -44,13 +46,13 @@ let result = 0;
 function userInput() {
     userNum = this.getAttribute("name");
     updateDisplay();
-    if (arr.length > 12) {
-        numberButtons.forEach(numberButtons=>numberButtons.removeEventListener("click", userInput));
+    if (arr.length >= 14) {
+        numberButtons.forEach(numberButtons=>numberButtons.removeEventListener("mousedown", userInput));
+        numberButtons.forEach(numberButtons => numberButtons.removeEventListener("touchstart", userInput));
       }
     if(this.getAttribute("name")===null){
         display.innerHTML = 0;
         arr = [];
-        numberButtons.forEach(numberButtons => numberButtons.addEventListener("click", userInput));
     }
 }
 
