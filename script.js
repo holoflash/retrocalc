@@ -5,19 +5,19 @@ const allButtons = document.querySelectorAll("button");
 const display = document.querySelector(".display");
 const clear = document.querySelector(".clear");
 
-//sound fx
-// function sound() {
-//     keysound.currentTime = 0.0;
-//     keysound.play();
-// }
+function sound() {
+    keysound.currentTime = 0.0;
+    keysound.play();
+}
 
-// function tapOrClick(event) {
-//     event.preventDefault();
-//     return false;
-// }
+function tapOrClick(event) {
+    event.preventDefault();
+    return false;
+}
 
-// allButtons.forEach(allButtons => allButtons.addEventListener("click", sound));
-
+allButtons.forEach(allButtons => allButtons.addEventListener("touchstart", sound));
+allButtons.forEach(allButtons => allButtons.addEventListener("touchend", tapOrClick, false));
+allButtons.forEach(allButtons => allButtons.addEventListener("mousedown", sound));
 numberButtons.forEach(numberButtons => numberButtons.addEventListener("click", userInput));
 clear.addEventListener("click", userInput);
 
