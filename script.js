@@ -24,15 +24,15 @@ const display = document.querySelector("h1");
 const clear = document.querySelector(".clear");
 const del = document.querySelector(".delete");
 const numbers = document.querySelectorAll(".number");
-const comma = document.querySelectorAll(".comma");
 
 
 clear.addEventListener("click", clearDisplay);
 del.addEventListener("click", remove);
 
 numbers.forEach(numbers => numbers.addEventListener("click",userInput));
+numbers.forEach(numbers => numbers.addEventListener("click",noDotStart));
+numbers.forEach(numbers => numbers.addEventListener("click",onlyOneDot));
 operate.forEach(operate => operate.addEventListener("click",operator));
-comma.forEach(comma => comma.addEventListener("click",dot));
 
 
 
@@ -52,19 +52,36 @@ function userInput(){
     updateDisplay();
 }
 
-function dot(){
-    calculator.firstOperand = calculator.firstOperand.concat(`${this.getAttribute("number")}`);
-    calculator.displayValue = calculator.firstOperand;
-    updateDisplay();
+
+function noDotStart(){
+    const regex = /^\./g;
+    let dotStart = regex.test(calculator.firstOperand);
+    if (dotStart === true){
+        remove();
+    }
+}
+
+function onlyOneDot(){
+    const regex = /(\..*){2,}/;
+    let dotStart = regex.test(calculator.firstOperand);
+    if (dotStart === true){
+        remove();
+    }
 }
 
 
 function operator(){
-    calculator.operator = this.getAttribute("name");
-    console.log(calculator.operator);
+    const operatorChoice = this.getAttribute("name");
+    console.log(operatorChoice);
 }
 
+
+
+
+
 function clearDisplay(){
+    if (calculator.displayValue ==="0")
+    return
     calculator.firstOperand = "";
     calculator.displayValue = "0"
     updateDisplay();
@@ -84,7 +101,6 @@ function remove(){
 
 function updateDisplay(){
     display.innerHTML = calculator.displayValue;    
-    console.log(calculator.firstOperand);
 }
 
 
