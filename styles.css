@@ -50,8 +50,6 @@ body {
 }
 
  .screen {
-    display: flex;
-    justify-content: flex-end;
     width: 500px;
     height: auto;
     flex: 1;
@@ -66,8 +64,8 @@ body {
     text-shadow: 0px -2px 10px;
     letter-spacing: 4px;
     padding: 10px;
+    font-size: auto;
     padding-bottom: 10px;
-    font-size: 2em;
     font-family: retroFont;
 }
 

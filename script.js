@@ -2,13 +2,6 @@
 const keysound = new Audio("resources/KeyR.wav");
 const alertsound = new Audio("resources/Alertsound.wav");
 const allButtons = document.querySelectorAll("button");
-const number = document.querySelectorAll(".number");
-const operator = document.querySelectorAll(".operator");
-const display = document.querySelector("h1");
-const equals = document.querySelector(".equals");
-const clear = document.querySelector(".clear");
-const del = document.querySelector(".delete");
-
 
 function sound() {
     keysound.currentTime = 0.0;
@@ -24,91 +17,117 @@ allButtons.forEach(allButtons => allButtons.addEventListener("touchstart", sound
 allButtons.forEach(allButtons => allButtons.addEventListener("touchend", tapOrClick, false));
 allButtons.forEach(allButtons => allButtons.addEventListener("mousedown", sound));
 
+//The actual calculator begins here
+const number = document.querySelectorAll(".number");
+const operator = document.querySelectorAll(".operator");
+const display = document.querySelector("h1");
+const equals = document.querySelector(".equals");
+const clear = document.querySelector(".clear");
+const del = document.querySelector(".delete");
+
 number.forEach(number => number.addEventListener("mousedown", userNumberInput));
+number.forEach(number => number.addEventListener("mousedown", dotManager));
 operator.forEach(operator => operator.addEventListener("mousedown", userOperatorInput));
 equals.addEventListener("mousedown", calculate);
 clear.addEventListener("click", clearMemory);
 del.addEventListener("click", erase);
 
 
-
+//calculator memory
 const calc = {
     x: "",
     y: "",
-    op:"",
+    op: "",
 }
 
-function userNumberInput(){
-   calc.x = calc.x.concat(`${this.getAttribute("number")}`);
-   display.textContent = calc.x;
+//number buttons
+function userNumberInput() {
+    calc.x = calc.x.concat(`${this.getAttribute("number")}`);
+    if (calc.x.length > 15) {
+        //shake
+        erase();
+        return
+    }
+    display.textContent = calc.x;
 }
 
-function userOperatorInput(){
+//starting with a dot adds a decimal point
+//only one dot is allowed
+function dotManager() {
+    const regexDotStart = /^\./g;
+    let dotStart = regexDotStart.test(calc.x);
+    if (dotStart === true) {
+        erase();
+        display.textContent = "0."
+        calc.x = calc.x + "0."
+    }
+    const regexMultiDot = /(\..*){2,}/;
+    let multiDot = regexMultiDot.test(calc.x);
+    if (multiDot === true) {
+        erase();
+    }
+}
+
+//operator buttons
+function userOperatorInput() {
+    if (calc.x ===""){
+        return
+    }
     calc.y = calc.x;
     calc.x = "";
     calc.op = this.getAttribute("name");
-    if (calc.op =="="){
-        calculate()
+    console.log(calc.op)
     }
-}
 
-function calculate(){
-    if(calc.op =="+"){
-        calc.x = parseInt(calc.y) + parseInt(calc.x);
+//math operations
+function calculate() {
+    if (calc.op ==="" ||calc.x ===""){
+        return
     }
-    else if(calc.op =="-"){
-        calc.x = parseInt(calc.y) - parseInt(calc.x);
+    if (calc.op == "+") {
+        calc.x = parseFloat(calc.y) + parseFloat(calc.x);
     }
-    else if(calc.op =="*"){
-        calc.x = parseInt(calc.y) * parseInt(calc.x);
+    else if (calc.op == "-") {
+        calc.x = parseFloat(calc.y) - parseFloat(calc.x);
     }
-    else if(calc.op =="/"){
-        calc.x = parseInt(calc.y) / parseInt(calc.x);
+    else if (calc.op == "*") {
+        calc.x = parseFloat(calc.y) * parseFloat(calc.x);
+    }
+    else if (calc.op == "/") {
+        calc.x = parseFloat(calc.y) / parseFloat(calc.x);
     }
     calc.op = "";
-        calc.y = "";
-        display.textContent = calc.x;
+    calc.y = "";
+    let result = parseFloat(calc.x.toFixed(2));
+    display.textContent = result;
+    console.log(result);
+    console.log("op is: " + calc.op +" x is: " + calc.x + " y is: " +calc.y)
 }
 
+//Memory clear and erase functions
 let zeroDisplay = display.textContent;
 
-function clearMemory(){
+function clearMemory() {
     calc.x = "";
     calc.y = "";
     calc.op = "";
-    display.textContent = zeroDisplay; 
+    display.textContent = zeroDisplay;
 }
 
-function erase(){
+function erase() {
     calc.x = calc.x.slice(0, -1);
-     display.textContent = calc.x;
-     if (calc.x===""){
+    display.textContent = calc.x;
+    if (calc.x === "") {
         display.textContent = zeroDisplay;
-     }
-
+    }
 }
 
-// function noDotStart(){
-//     const regex = /^\./g;
-//     let dotStart = regex.test(calculator.firstOperand)
-//     if (dotStart === true){
-//         remove();
-//         alertsound.currentTime = 0.0;
-//         alertsound.play();
-//         alertsound.volume  = 0.5;
-//     }
-// }
 
-// function onlyOneDot(){
-//     const regex = /(\..*){2,}/;
-//     let dotStart = regex.test(calculator.firstOperand);
-//     if (dotStart === true){
-//         alertsound.currentTime = 0.0;
-//         alertsound.play();
-//         alertsound.volume  = 0.5;
-//         remove();
-//     }
-// }
+//2.accept floats and restrict output to x.xx
+
+//3.turn off certain buttons while operating
+
+//4.allow operations on one input number
 
 
 
