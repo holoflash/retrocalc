@@ -120,9 +120,10 @@ body {
     grid-column: 1;
 }
 
-.operator, #comma {
+.operator, #comma, .equals {
     background-image: url(resources/blue_button.png);
 }
+
 
 .number {
     background-image: url(resources/brown_button.png);
