@@ -8,36 +8,35 @@ function sound() {
     keysound.play();
 }
 
-function tapOrClick(event) {
-    event.preventDefault();
-    return false;
-}
+allButtons.forEach(allButtons => allButtons.addEventListener("click", sound));
 
-allButtons.forEach(allButtons => allButtons.addEventListener("touchstart", sound));
-allButtons.forEach(allButtons => allButtons.addEventListener("touchend", tapOrClick, false));
-allButtons.forEach(allButtons => allButtons.addEventListener("mousedown", sound));
+
 
 //The actual calculator begins here
 const number = document.querySelectorAll(".number");
 const operator = document.querySelectorAll(".operator");
 const display = document.querySelector("h1");
-const equals = document.querySelector(".equals");
 const clear = document.querySelector(".clear");
 const del = document.querySelector(".delete");
 
-number.forEach(number => number.addEventListener("mousedown", userNumberInput));
-number.forEach(number => number.addEventListener("mousedown", dotManager));
-operator.forEach(operator => operator.addEventListener("mousedown", userOperatorInput));
-equals.addEventListener("mousedown", calculate);
+window.addEventListener("keydown", pressedKey);
+
+number.forEach(number => number.addEventListener("click", userNumberInput));
+number.forEach(number => number.addEventListener("click", dotManager));
+operator.forEach(operator => operator.addEventListener("click", userOperatorInput));
 clear.addEventListener("click", clearMemory);
 del.addEventListener("click", erase);
 
+function pressedKey(e) {
+    console.log(e.keyCode);
+}
 
 //calculator memory
 const calc = {
     x: "",
     y: "",
     op: "",
+    sum: "",
 }
 
 //number buttons
@@ -49,6 +48,12 @@ function userNumberInput() {
         return
     }
     display.textContent = calc.x;
+
+    // debug
+    // console.log("op number section: " + calc.op)
+    // console.log("x: " + calc.x)
+    // console.log("y: " + calc.y)
+    // console.log("sum: " + calc.sum)
 }
 
 //starting with a dot adds a decimal point
@@ -57,9 +62,8 @@ function dotManager() {
     const regexDotStart = /^\./g;
     let dotStart = regexDotStart.test(calc.x);
     if (dotStart === true) {
-        erase();
-        display.textContent = "0."
-        calc.x = calc.x + "0."
+        clearMemory();
+        return
     }
     const regexMultiDot = /(\..*){2,}/;
     let multiDot = regexMultiDot.test(calc.x);
@@ -70,38 +74,51 @@ function dotManager() {
 
 //operator buttons
 function userOperatorInput() {
-    if (calc.x ===""){
+    if (calc.op === "=") {
+        calc.x = calc.sum;
+    }
+    if (calc.x === "" && calc.op !== "=") {
         return
+    }
+    if (calc.op !== "") {
+        calculate();
     }
     calc.y = calc.x;
     calc.x = "";
     calc.op = this.getAttribute("name");
-    console.log(calc.op)
+    if (calc.y !== "" || calc.x !== "") {
+        calculate();
     }
+}
+
 
 //math operations
 function calculate() {
-    if (calc.op ==="" ||calc.x ===""){
+    if (calc.op === "" || calc.x === "") {
         return
     }
-    if (calc.op == "+") {
-        calc.x = parseFloat(calc.y) + parseFloat(calc.x);
+    if (calc.op === "+") {
+        calc.sum = parseFloat(calc.y) + parseFloat(calc.x);
     }
-    else if (calc.op == "-") {
-        calc.x = parseFloat(calc.y) - parseFloat(calc.x);
+    else if (calc.op === "-") {
+        calc.sum = parseFloat(calc.y) - parseFloat(calc.x);
     }
-    else if (calc.op == "*") {
-        calc.x = parseFloat(calc.y) * parseFloat(calc.x);
+    else if (calc.op === "*") {
+        calc.sum = parseFloat(calc.y) * parseFloat(calc.x);
     }
-    else if (calc.op == "/") {
-        calc.x = parseFloat(calc.y) / parseFloat(calc.x);
+    else if (calc.op === "/") {
+        calc.sum = parseFloat(calc.y) / parseFloat(calc.x);
+        if (calc.x === "0" || calc.y === "0") {
+            display.textContent = "nice try"
+            return
+        }
     }
-    calc.op = "";
     calc.y = "";
-    let result = parseFloat(calc.x.toFixed(2));
-    display.textContent = result;
-    console.log(result);
-    console.log("op is: " + calc.op +" x is: " + calc.x + " y is: " +calc.y)
+    calc.x = calc.sum
+    calc.op = calc.op;
+    let niceNumber = parseFloat(calc.sum.toFixed(4));
+    display.textContent = niceNumber;
+
 }
 
 //Memory clear and erase functions
@@ -111,6 +128,7 @@ function clearMemory() {
     calc.x = "";
     calc.y = "";
     calc.op = "";
+    calc.sum = "";
     display.textContent = zeroDisplay;
 }
 
@@ -121,24 +139,3 @@ function erase() {
         display.textContent = zeroDisplay;
     }
 }
-
-
-//2.accept floats and restrict output to x.xx
-
-//3.turn off certain buttons while operating
-
-//4.allow operations on one input number
-
-
-
-// // JS keycodes
-// // 0	48
-// // 1	49
-// // 2	50
-// // 3	51
-// // 4	52
-// // 5	53
-// // 6	54
-// // 7	55
-// // 8	56
-// // 9	57
