@@ -1,35 +1,14 @@
-//Sound effects
-const keysound = new Audio("resources/KeyR.wav");
-const alertsound = new Audio("resources/Alertsound.wav");
-const allButtons = document.querySelectorAll("button");
-
-function sound() {
-    keysound.currentTime = 0.0;
-    keysound.play();
-}
-
-allButtons.forEach(allButtons => allButtons.addEventListener("click", sound));
-
-
-
-//The actual calculator begins here
 const number = document.querySelectorAll(".number");
 const operator = document.querySelectorAll(".operator");
 const display = document.querySelector("h1");
 const clear = document.querySelector(".clear");
 const del = document.querySelector(".delete");
 
-window.addEventListener("keydown", pressedKey);
-
 number.forEach(number => number.addEventListener("click", userNumberInput));
 number.forEach(number => number.addEventListener("click", dotManager));
-operator.forEach(operator => operator.addEventListener("click", userOperatorInput));
+operator.forEach(operator => operator.addEventListener("click", userOperatorInput, false));
 clear.addEventListener("click", clearMemory);
 del.addEventListener("click", erase);
-
-function pressedKey(e) {
-    console.log(e.keyCode);
-}
 
 //calculator memory
 const calc = {
@@ -48,7 +27,6 @@ function userNumberInput() {
         return
     }
     display.textContent = calc.x;
-
     // debug
     // console.log("op number section: " + calc.op)
     // console.log("x: " + calc.x)
@@ -62,7 +40,8 @@ function dotManager() {
     const regexDotStart = /^\./g;
     let dotStart = regexDotStart.test(calc.x);
     if (dotStart === true) {
-        clearMemory();
+        display.innerText = "0."
+        calc.x = "0."
         return
     }
     const regexMultiDot = /(\..*){2,}/;
@@ -113,29 +92,74 @@ function calculate() {
             return
         }
     }
+    calc.sum = parseFloat(calc.sum.toFixed(2));
     calc.y = "";
-    calc.x = calc.sum
+    calc.x = calc.sum;
     calc.op = calc.op;
-    let niceNumber = parseFloat(calc.sum.toFixed(4));
-    display.textContent = niceNumber;
-
+    display.textContent = calc.sum;
 }
 
 //Memory clear and erase functions
-let zeroDisplay = display.textContent;
-
 function clearMemory() {
     calc.x = "";
     calc.y = "";
     calc.op = "";
     calc.sum = "";
-    display.textContent = zeroDisplay;
+    display.textContent = "0";
 }
 
 function erase() {
     calc.x = calc.x.slice(0, -1);
     display.textContent = calc.x;
     if (calc.x === "") {
-        display.textContent = zeroDisplay;
+        display.textContent = "0";
+    }
+    if (calc.x === "") {
+        calc.y = calc.y.slice(0, -1);
     }
 }
+
+//Keyboard input
+window.addEventListener("keydown", keyboardInput, false);
+window.addEventListener("keydown", dotManager);
+
+function keyboardInput(e) {
+    switch (e.key) {
+        case "c":
+            clearMemory();
+            break;
+
+        case "Backspace":
+            erase();
+            break;
+
+        case "Enter":
+            calc.op = "=";
+            break;
+
+        case "+": case "-": case "*": case "/":
+            calc.op = e.key
+            break;
+
+        case "1": case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9": case "0": case ".":
+            calc.x = calc.x.concat(`${e.key}`);
+            display.textContent = calc.x;
+            break;
+
+        case "Shift":
+            break;
+
+            default:
+                console.log("op key section " + calc.op)
+                console.log("x: " + calc.x)
+                console.log("y: " + calc.y)
+                console.log("sum: " + calc.sum) 
+    }
+}
+
+
+//Fix bug where "num, =, +, num, =" results in "NaN"
+
+//allow incremental op by pressing =
+
+//Implement full keyboard support
