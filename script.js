@@ -6,9 +6,10 @@ const del = document.querySelector(".delete");
 
 number.forEach(number => number.addEventListener("click", userNumberInput));
 number.forEach(number => number.addEventListener("click", dotManager));
-operator.forEach(operator => operator.addEventListener("click", userOperatorInput, false));
+operator.forEach(operator => operator.addEventListener("click", userOperatorInput));
 clear.addEventListener("click", clearMemory);
 del.addEventListener("click", erase);
+
 
 //calculator memory
 const calc = {
@@ -88,11 +89,11 @@ function calculate() {
     else if (calc.op === "/") {
         calc.sum = parseFloat(calc.y) / parseFloat(calc.x);
         if (calc.x === "0" || calc.y === "0") {
-            display.textContent = "nice try"
+            display.textContent = "can't do that"
             return
         }
     }
-    calc.sum = parseFloat(calc.sum.toFixed(2));
+    calc.sum = parseFloat(calc.sum.toFixed(12));
     calc.y = "";
     calc.x = calc.sum;
     calc.op = calc.op;
@@ -120,46 +121,36 @@ function erase() {
 }
 
 //Keyboard input
-window.addEventListener("keydown", keyboardInput, false);
+window.addEventListener("keydown", keyboardInput);
 window.addEventListener("keydown", dotManager);
+number.forEach(number => number.addEventListener("click", keyboardInput));
 
 function keyboardInput(e) {
-    switch (e.key) {
+    switch (e.key){
         case "c":
             clearMemory();
             break;
-
         case "Backspace":
             erase();
             break;
-
-        case "Enter":
-            calc.op = "=";
+        case "Enter": case " ":
+            document.getElementById("Enter").click();
             break;
-
         case "+": case "-": case "*": case "/":
-            calc.op = e.key
+            document.getElementById(`${e.key}`).click();
             break;
-
         case "1": case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9": case "0": case ".":
-            calc.x = calc.x.concat(`${e.key}`);
-            display.textContent = calc.x;
+           document.getElementById(`${e.key}`).click();
             break;
-
         case "Shift":
             break;
-
-            default:
-                console.log("op key section " + calc.op)
-                console.log("x: " + calc.x)
-                console.log("y: " + calc.y)
-                console.log("sum: " + calc.sum) 
+            }
     }
-}
+
 
 
 //Fix bug where "num, =, +, num, =" results in "NaN"
 
 //allow incremental op by pressing =
 
-//Implement full keyboard support
+//Squash any bugs
