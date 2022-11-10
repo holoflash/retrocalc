@@ -13,11 +13,15 @@
 }
 
 body {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     margin: 0px;
     padding: 0px;
     background: linear-gradient(190deg, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1));
 }
-.container{
+
+.container {
     height: 100vh;
     width: 100vw;
     padding: 10px;
@@ -27,6 +31,7 @@ body {
 }
 
 .chassi {
+    height: 60%;
     align-self: center;
     display: flex;
     flex-direction: column;
@@ -49,37 +54,39 @@ body {
     text-shadow: 2px 4px rgba(255, 255, 255, 0.383);
 }
 
- .screen {
+.screen {
     width: 520px;
     background-color: rgb(24, 9, 9);
     border: inset #ffffff 4px;
-} 
+}
 
-.display{
-    overflow:scroll;
+.display {
+    overflow: scroll;
     text-align: right;
     color: #EF1E06;
-    text-shadow: 0px -2px 10px;
+    text-shadow: 0px -2px 5px;
     letter-spacing: 4px;
     padding: 10px;
     padding-bottom: 10px;
     font-family: retroFont;
     opacity: 1;
 }
-.blinking{
-    opacity:0;
+
+.blinking {
+    opacity: 0;
 }
 
 .display::-webkit-scrollbar {
     display: none;
-  }
+}
 
 .display {
     -ms-overflow-style: none;
     scrollbar-width: none;
-  }
+}
 
 .buttons {
+    height: 100%;
     box-shadow: inset 0px 5px 2px rgba(0, 0, 0, 0.478);
     display: grid;
     grid-template-columns: repeat(4, 120px);
@@ -130,7 +137,7 @@ body {
     aspect-ratio: 1 / 1;
     margin: 4px;
     padding: 0px;
-    font-family:sans-serif;
+    font-family: sans-serif;
     font-size: 20px;
     border-radius: 10px;
     text-align: center;
@@ -138,7 +145,9 @@ body {
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.166);
 }
 
-.operator, #\., .equals {
+.operator,
+#\.,
+.equals {
     background-color: rgb(67, 119, 174);
     color: #ffffff;
 
@@ -146,7 +155,7 @@ body {
 
 .number {
     background-color: #e2d9cd;
-    color:rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
 }
 
 .clear {
@@ -160,18 +169,18 @@ body {
     color: #f1f1f1;
 }
 
-.delete{
+.delete {
     grid-column: 3 / span 2;
     grid-row: 1;
     aspect-ratio: 4 / 1;
-    background-color:#000000;
+    background-color: #000000;
     font-size: 20px;
     letter-spacing: 5px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: #f1f1f1;
 }
 
-button:active{
+button:active {
     border: inset;
     filter: brightness(0.99);
     box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.166);

@@ -22,7 +22,7 @@ window.addEventListener("keydown", keyboardInput);
 window.addEventListener("keydown", dotManager);
 
 function userNumberInput() {
-    if (calc.x.length >= 16 || calc.y.length >= 16) {
+    if (calc.x.length > 16 || calc.y.length > 16) {
         blink();
         setTimeout(blink, 10);
         return;
@@ -35,34 +35,34 @@ function userNumberInput() {
         calc.x = calc.x.concat(`${this.getAttribute("number")}`);
         display.textContent = calc.x;
     }
-    console.log("number " + calc.x + calc.op +  calc.y + " = "+ calc.sum)
+    console.log("number " + calc.x + calc.op + calc.y + " = " + calc.sum)
 }
 
 function dotManager() {
     const regexDotStart = /^\./g;
-    let dotStartx = regexDotStart.test(calc.x);
-    let dotStarty = regexDotStart.test(calc.y);
-    if (dotStartx === true) {
+    let dotStartX = regexDotStart.test(calc.x);
+    let dotStartY = regexDotStart.test(calc.y);
+    if (dotStartX === true) {
         display.innerText = "0."
         calc.x = "0."
         blink();
         setTimeout(blink, 10);
     }
-    if (dotStarty === true) {
+    if (dotStartY === true) {
         display.innerText = "0."
         calc.y = "0."
         blink();
         setTimeout(blink, 10);
     }
     const regexMultiDot = /(\..*){2,}/;
-    let multiDotx = regexMultiDot.test(calc.x);
-    let multiDoty = regexMultiDot.test(calc.y);
-    if (multiDotx === true) {
+    let multiDotX = regexMultiDot.test(calc.x);
+    let multiDotY = regexMultiDot.test(calc.y);
+    if (multiDotX === true) {
         erase();
         blink();
         setTimeout(blink, 10);
     }
-    if (multiDoty === true) {
+    if (multiDotY === true) {
         erase();
         blink();
         setTimeout(blink, 10);
@@ -72,7 +72,12 @@ function dotManager() {
 function userOperatorInput() {
     blink();
     setTimeout(blink, 10);
-    if (calc.sum !==""){
+    blink();
+    setTimeout(blink, 10);
+    if (calc.x === "") {
+        return
+    }
+    if (calc.sum !== "") {
         calc.y = "";
         calc.op = this.getAttribute("name");
     }
@@ -89,11 +94,10 @@ function userOperatorInput() {
         setTimeout(blink, 10);
         return
     }
-    console.log("operator " + calc.x + calc.op +  calc.y + " = "+ calc.sum)
+    console.log("operator " + calc.x + calc.op + calc.y + " = " + calc.sum)
 }
 
-function calculate() {
-   
+function calculate(){
     if (calc.op === "" || calc.y === "") {
         blink();
         setTimeout(blink, 10);
@@ -110,51 +114,91 @@ function calculate() {
     }
     else if (calc.op === "/") {
         calc.sum = parseFloat(calc.x) / parseFloat(calc.y);
-        if (calc.x === "0") {
-            display.textContent = "can't do that"
+        if (calc.y === "0" || calc.x === "0") {
+            clearMemory();
+            display.textContent = "can't do that";
             blink();
-            setTimeout(blink, 10);
+            setTimeout(blink, 100);
             return
         }
     }
     calc.sum = parseFloat(calc.sum.toFixed(10));
+    if(calc.sum <= "0.0000001"){
+        clearMemory();
+        return
+    }
     calc.x = calc.sum;
+    calc.sum = "0";
     display.textContent = calc.x;
-    console.log("result " + calc.x + calc.op +  calc.y + " = "+ calc.sum)
+    console.log("result " + calc.x + calc.op + calc.y + " = " + calc.sum)
 }
 
 function clearMemory() {
+    blink();
+    setTimeout(blink, 10);
+    if (calc.x === "") {
+        return
+    }
     calc.x = "";
     calc.y = "";
     calc.op = "";
     calc.sum = "";
     display.textContent = "0";
-    blink();
-    setTimeout(blink, 10);
 }
 
 function erase() {
     blink();
     setTimeout(blink, 10);
-    if (calc.y === "" && calc.op ==="" && calc.sum ==="") {
+    if (calc.x === "") {
+        return
+    }
+    if (display.textContent === calc.x) {
         calc.x = calc.x.slice(0, -1);
         display.textContent = calc.x;
         if (calc.x === "") {
             display.textContent = "0";
-            blink();
-            setTimeout(blink, 10);
+            return;
         }
     }
-
-    if (calc.y !=="" && calc.op !=="" && calc.sum ==="") {
+    if (display.textContent === calc.y) {
         calc.y = calc.y.slice(0, -1);
         display.textContent = calc.y;
         if (calc.y === "") {
             display.textContent = "0";
-            blink();
-            setTimeout(blink, 10);
+            return;
         }
     }
+    // if ((calc.y === ""|| calc.y !=="0") && calc.op ==="" && calc.sum ==="") {
+    //     calc.x = calc.x.slice(0, -1);
+    //     display.textContent = calc.x;
+    //     if (calc.x === "") {
+    //         display.textContent = "0";
+    //         blink();
+    //         setTimeout(blink, 10);
+    //     }
+    // }
+
+    // if (calc.y !=="" && calc.op !=="" && calc.sum ==="") {
+    //     calc.y = calc.y.slice(0, -1);
+    //     display.textContent = calc.y;
+    //     if (calc.y === "") {
+    //         calc.y ="0";
+    //         display.textContent = "0";
+    //         blink();
+    //         setTimeout(blink, 10);
+    //     }
+    // }
+
+    // else if (calc.x !=="" && calc.x !=="" && calc.op !=="" && calc.sum ==="") {
+    //     calc.x = calc.x.slice(0, -1);
+    //     display.textContent = calc.x;
+    //     if (calc.sum ==="") {
+    //         display.textContent = "0";
+    //         blink();
+    //         setTimeout(blink, 10);
+    //     }
+    // }
+    console.log("erase " + calc.x + calc.op + calc.y + " = " + calc.sum)
 }
 
 function keyboardInput(e) {
