@@ -41,7 +41,7 @@ body {
 
 .brand {
     white-space: nowrap;
-    font-size: 40px;
+    font-size: 50px;
     text-align: left;
     font-family: linebeam;
     margin: 10px;
@@ -50,8 +50,7 @@ body {
 }
 
  .screen {
-    width: 500px;
-
+    width: 520px;
     background-color: rgb(24, 9, 9);
     border: inset #ffffff 4px;
 } 
@@ -87,7 +86,7 @@ body {
     margin: 10px;
     padding: 10px;
     background-color: #d4cabf;
-    border-radius: 12px;
+    border-radius: 10px;
 }
 
 .zero {
@@ -125,25 +124,29 @@ body {
     grid-column: 1;
 }
 
-.operator, #comma, .equals {
-    background-image: url(resources/blue_button.png);
+.btn {
+    background-size: contain;
+    background-position: center;
+    aspect-ratio: 1 / 1;
+    margin: 4px;
+    padding: 0px;
+    font-family:sans-serif;
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: outset 2px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.166);
+}
+
+.operator, #\., .equals {
+    background-color: rgb(67, 119, 174);
+    color: #ffffff;
+
 }
 
 .number {
-    background-image: url(resources/brown_button.png);
-}
-
-.btn {
-    background-size: cover;
-    background-position: center;
-    aspect-ratio: 1 / 1;
-    margin: 3px;
-    padding: 0;
-    color: #ffffff;
-    font-family:sans-serif;
-    font-size: 20px;
-    border-radius: 12px;
-    text-align: center;
+    background-color: #e2d9cd;
+    color:rgb(0, 0, 0);
 }
 
 .clear {
@@ -166,4 +169,10 @@ body {
     letter-spacing: 5px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: #f1f1f1;
+}
+
+button:active{
+    border: inset;
+    filter: brightness(0.99);
+    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.166);
 }
