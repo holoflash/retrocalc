@@ -1,46 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=yes">
     <title>RETRO-CALC.</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="resources/favicon.png">
 </head>
-
 <body ontouchstart="">
     <div class="container">
         <div class="chassi">
             <header>
                 <div class="brand">RETRO-CALC.</div>
             </header>
-            <div class="screen">
                 <h1 class="display">0</h1>
-            </div>
             <div class="buttons">
                 <button class="btn clear">C</button>
                 <button class="btn delete" >←</button>
-                <button id="." class="btn number comma" number=".">.</button>
                 <button id="7" class="btn number seven" number="7">7</button>
                 <button id="8" class="btn number eight" number="8">8</button>
                 <button id="9" class="btn number nine" number="9">9</button>
+                <button id="/" class="btn operator divided" name="/">/</button>
                 <button id="4" class="btn number four" number="4">4</button>
                 <button id="5" class="btn number five" number="5">5</button>
                 <button id="6" class="btn number six" number="6">6</button>
+                <button id="*" class="btn operator times" name="*">x</button>
                 <button id="1" class="btn number one" number="1">1</button>
                 <button id="2" class="btn number two" number="2">2</button>
                 <button id="3" class="btn number three" number="3">3</button>
-                <button id="0" class="btn number zero" number="0">0</button>
-                <button id="/" class="btn operator divided" name="/">/</button>
-                <button id="+" class="btn operator plus" name="+">+</button>
                 <button id="-" class="btn operator minus" name="-">-</button>
-                <button id="*" class="btn operator times" name="*">x</button>
+                <button id="." class="btn number comma" number=".">.</button>
+                <button id="0" class="btn number zero" number="0">0</button>
                 <button id="Enter" class="btn equals" name ="=">=</button>
+                <button id="+" class="btn operator plus" name="+">+</button>
             </div>
+            <div class ="footer"></div>
         </div>
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>

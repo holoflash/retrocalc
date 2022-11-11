@@ -22,11 +22,6 @@ window.addEventListener("keydown", keyboardInput);
 window.addEventListener("keydown", dotManager);
 
 function userNumberInput() {
-    if (calc.x.length > 16 || calc.y.length > 16) {
-        blink();
-        setTimeout(blink, 10);
-        return;
-    }
     if (calc.x !== "" && calc.op !== "") {
         calc.y = calc.y.concat(`${this.getAttribute("number")}`);
         display.textContent = calc.y;
@@ -35,7 +30,10 @@ function userNumberInput() {
         calc.x = calc.x.concat(`${this.getAttribute("number")}`);
         display.textContent = calc.x;
     }
-    console.log("number " + calc.x + calc.op + calc.y + " = " + calc.sum)
+    if (calc.x.length > 10 || calc.y.length > 10) {
+        erase();
+        return;
+    }
 }
 
 function dotManager() {
@@ -44,34 +42,25 @@ function dotManager() {
     let dotStartY = regexDotStart.test(calc.y);
     if (dotStartX === true) {
         display.innerText = "0."
+        blink();
+        setTimeout(blink, 10);
         calc.x = "0."
-        blink();
-        setTimeout(blink, 10);
     }
-    if (dotStartY === true) {
+    if(dotStartY === true){
         display.innerText = "0."
-        calc.y = "0."
         blink();
         setTimeout(blink, 10);
+        calc.y = "0."
     }
     const regexMultiDot = /(\..*){2,}/;
     let multiDotX = regexMultiDot.test(calc.x);
     let multiDotY = regexMultiDot.test(calc.y);
-    if (multiDotX === true) {
+    if (multiDotX === true || multiDotY === true) {
         erase();
-        blink();
-        setTimeout(blink, 10);
-    }
-    if (multiDotY === true) {
-        erase();
-        blink();
-        setTimeout(blink, 10);
     }
 }
 
 function userOperatorInput() {
-    blink();
-    setTimeout(blink, 10);
     blink();
     setTimeout(blink, 10);
     if (calc.x === "") {
@@ -94,7 +83,6 @@ function userOperatorInput() {
         setTimeout(blink, 10);
         return
     }
-    console.log("operator " + calc.x + calc.op + calc.y + " = " + calc.sum)
 }
 
 function calculate(){
@@ -123,22 +111,18 @@ function calculate(){
         }
     }
     calc.sum = parseFloat(calc.sum.toFixed(10));
-    if(calc.sum <= "0.0000001"){
+    if(calc.sum <= "0.0000000000001"){
         clearMemory();
         return
     }
     calc.x = calc.sum;
     calc.sum = "0";
     display.textContent = calc.x;
-    console.log("result " + calc.x + calc.op + calc.y + " = " + calc.sum)
 }
 
 function clearMemory() {
     blink();
     setTimeout(blink, 10);
-    if (calc.x === "") {
-        return
-    }
     calc.x = "";
     calc.y = "";
     calc.op = "";
@@ -149,9 +133,6 @@ function clearMemory() {
 function erase() {
     blink();
     setTimeout(blink, 10);
-    if (calc.x === "") {
-        return
-    }
     if (display.textContent === calc.x) {
         calc.x = calc.x.slice(0, -1);
         display.textContent = calc.x;
@@ -168,37 +149,6 @@ function erase() {
             return;
         }
     }
-    // if ((calc.y === ""|| calc.y !=="0") && calc.op ==="" && calc.sum ==="") {
-    //     calc.x = calc.x.slice(0, -1);
-    //     display.textContent = calc.x;
-    //     if (calc.x === "") {
-    //         display.textContent = "0";
-    //         blink();
-    //         setTimeout(blink, 10);
-    //     }
-    // }
-
-    // if (calc.y !=="" && calc.op !=="" && calc.sum ==="") {
-    //     calc.y = calc.y.slice(0, -1);
-    //     display.textContent = calc.y;
-    //     if (calc.y === "") {
-    //         calc.y ="0";
-    //         display.textContent = "0";
-    //         blink();
-    //         setTimeout(blink, 10);
-    //     }
-    // }
-
-    // else if (calc.x !=="" && calc.x !=="" && calc.op !=="" && calc.sum ==="") {
-    //     calc.x = calc.x.slice(0, -1);
-    //     display.textContent = calc.x;
-    //     if (calc.sum ==="") {
-    //         display.textContent = "0";
-    //         blink();
-    //         setTimeout(blink, 10);
-    //     }
-    // }
-    console.log("erase " + calc.x + calc.op + calc.y + " = " + calc.sum)
 }
 
 function keyboardInput(e) {
@@ -223,6 +173,8 @@ function keyboardInput(e) {
             document.getElementById(`${e.key}`).click();
             break;
         case "Shift":
+            e.preventDefault();
+            e.stopPropagation();
             break;
         default:
             blink();
